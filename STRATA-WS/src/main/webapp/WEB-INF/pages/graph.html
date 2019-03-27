@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Webservice Metrics Graph</title>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="../webappresources/js/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+	google.load("visualization", "1", {packages : [ "corechart" ]});
+	 
+ 	function drawChart() {
+	$.get("/strata-ws/metrics-graph",function(mydata) {
+	    var data = google.visualization.arrayToDataTable(mydata);
+	    var options = {title : 'Webservice Metrics',
+	                   hAxis : {title : 'Time',titleTextStyle : {color : '#333'}},
+	                   vAxis : {minValue : 0}};
+	 
+	    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+	    chart.draw(data, options);
+	 
+	});
+	 
+	}
+	
+/* 	var HttpClient = function() {
+	    this.get = function(aUrl, aCallback) {
+	        var anHttpRequest = new XMLHttpRequest();
+	        anHttpRequest.onreadystatechange = function() { 
+	            if (anHttpRequest.readyState == 4 && anHttpRequest.status == 200)
+	                aCallback(anHttpRequest.responseText);
+	        }
+
+	        anHttpRequest.open( "GET", aUrl, true );            
+	        anHttpRequest.send( null );
+	    }
+	}	
+	var client = new HttpClient();
+	function drawChart() {
+	client.get("/strata-ws/metrics-graph",function(mydata) {
+	    var data = google.visualization.arrayToDataTable(mydata);
+	    var options = {title : 'Webservice Metrics',
+	                   hAxis : {title : 'Time',titleTextStyle : {color : '#333'}},
+	                   vAxis : {minValue : 0}};
+	 
+	    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+	    chart.draw(data, options);	 
+	});	 
+	} */
+	
+
+</script>
+</head>
+<body onload="drawChart()">
+    <div id="chart_div" style="width: 1280px; height: 720px;"></div>
+</body>
+</html>
